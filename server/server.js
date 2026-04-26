@@ -40,6 +40,6 @@ const PORT = process.env.PORT || 5000;
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`Server running on https://online-voting-system-ptpr.onrender.com/`);
+    console.log(`Server running on http://localhost:${PORT}`);
   });
 });

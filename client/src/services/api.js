@@ -1,5 +1,21 @@
 import axios from "axios";
 
+const normalizeProtocol = (urlString) => {
+  try {
+    const url = new URL(urlString);
+    const isSecurePage = typeof window !== "undefined" && window.location.protocol === "https:";
+
+    // Prevent mixed-content failures when app runs on HTTPS.
+    if (isSecurePage && url.protocol === "http:") {
+      url.protocol = "https:";
+    }
+
+    return url.toString().replace(/\/+$/, "");
+  } catch {
+    return (urlString || "").replace(/\/+$/, "");
+  }
+};
+
 const normalizeBaseUrl = (rawUrl) => {
   const trimmed = (rawUrl || "").trim();
 
@@ -7,7 +23,7 @@ const normalizeBaseUrl = (rawUrl) => {
     return "https://online-voting-system-ptpr.onrender.com/api";
   }
 
-  const withoutTrailingSlash = trimmed.replace(/\/+$/, "");
+  const withoutTrailingSlash = normalizeProtocol(trimmed);
   if (withoutTrailingSlash.endsWith("/api")) {
     return withoutTrailingSlash;
   }
