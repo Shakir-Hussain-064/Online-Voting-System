@@ -4,7 +4,7 @@ const normalizeBaseUrl = (rawUrl) => {
   const trimmed = (rawUrl || "").trim();
 
   if (!trimmed) {
-    return "http://localhost:5000/api";
+    return "https://online-voting-system-ptpr.onrender.com/api";
   }
 
   const withoutTrailingSlash = trimmed.replace(/\/+$/, "");
