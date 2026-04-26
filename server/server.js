@@ -31,10 +31,15 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ message: "Internal Server Error" });
 });
 
+app.use(cors({
+  origin: "https://your-frontend.onrender.com",
+  credentials: true
+}));
+
 const PORT = process.env.PORT || 5000;
 
 connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on https://online-voting-system-ptpr.onrender.com/`);
   });
 });
