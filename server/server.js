@@ -1,6 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./db.js";
@@ -30,16 +31,23 @@ app.get("/api/health", (_req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/vote", voteRoutes);
 
-if (process.env.NODE_ENV === "production") {
-  const clientBuildPath = path.join(__dirname, "..", "client", "build");
+const clientBuildPath = path.join(__dirname, "..", "client", "build");
+const clientIndexPath = path.join(clientBuildPath, "index.html");
+const hasClientBuild = fs.existsSync(clientIndexPath);
+
+if (hasClientBuild) {
   app.use(express.static(clientBuildPath));
 
   app.get("*", (req, res, next) => {
     if (req.path.startsWith("/api")) {
       return next();
     }
-    res.sendFile(path.join(clientBuildPath, "index.html"));
+    res.sendFile(clientIndexPath);
   });
+} else {
+  console.warn(
+    `Client build not found at ${clientIndexPath}. Non-API routes will return 404.`
+  );
 }
 
 app.use((err, _req, res, _next) => {
