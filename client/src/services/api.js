@@ -20,7 +20,7 @@ const normalizeBaseUrl = (rawUrl) => {
   const trimmed = (rawUrl || "").trim();
 
   if (!trimmed) {
-    return "https://online-voting-system-ptpr.onrender.com/api";
+    return "https://online-voting-system-2tni.onrender.com/api";
   }
 
   const withoutTrailingSlash = normalizeProtocol(trimmed);
