@@ -4,8 +4,6 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "build:client": "npm install --prefix ../client && npm run build --prefix ../client",
-    "build": "npm run build:client",
     "dev": "nodemon server.js",
     "start": "node server.js",
     "seed": "node config/seed.js"
